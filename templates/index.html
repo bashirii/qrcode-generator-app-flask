@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>QR Code Generator</h1>
+    <form id="qr-form">
+        <input type="text" id="content" name="content" required>
+        <button type="submit">Generate QR Code</button>
+    </form>
+    <div id="qr-result"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#qr-form').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/generate',
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#qr-result').html('<img src="data:image/png;base64,' + response.image + '" alt="QR Code">');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,58 @@
+
+syntax = "proto3";
+
+package qrcode;
+
+service QRCodeService {
+  rpc GenerateQRCode (GenerateRequest) returns (GenerateResponse) {}
+  rpc ListQRCodes (ListRequest) returns (ListResponse) {}
+  rpc GetQRCode (GetRequest) returns (QRCodeInfo) {}
+  rpc IncrementScanCount (IncrementRequest) returns (IncrementResponse) {}
+  rpc DeleteQRCode (DeleteRequest) returns (DeleteResponse) {}
+}
+
+message GenerateRequest {
+  string content = 1;
+}
+
+message GenerateResponse {
+  int32 id = 1;
+  string filename = 2;
+  string url = 3;
+}
+
+message ListRequest {}
+
+message ListResponse {
+  repeated QRCodeInfo qr_codes = 1;
+}
+
+message GetRequest {
+  int32 id = 1;
+}
+
+message QRCodeInfo {
+  int32 id = 1;
+  string content = 2;
+  string created_at = 3;
+  int32 scan_count = 4;
+  string filename = 5;
+  string url = 6;
+}
+
+message IncrementRequest {
+  int32 id = 1;
+}
+
+message IncrementResponse {
+  bool success = 1;
+}
+
+message DeleteRequest {
+  int32 id = 1;
+}
+
+message DeleteResponse {
+  bool success = 1;
+}
+
